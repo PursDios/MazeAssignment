@@ -42,4 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\roomnames.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

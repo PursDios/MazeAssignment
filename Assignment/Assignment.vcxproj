@@ -126,6 +126,9 @@
     <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.h" />
     <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\roomnames.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
