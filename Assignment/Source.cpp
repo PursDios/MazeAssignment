@@ -1,9 +1,7 @@
-#include "stdlib.h"
-#include "iostream"
-
-using namespace std;
+#include "MazeController.h"
 
 int main()
 {
-
+	MazeController mc;
+	return 0;
 }
