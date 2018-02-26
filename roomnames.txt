@@ -1,0 +1,55 @@
+darkroom
+den
+dining room
+dormitory
+drawing room
+dressing room
+dungeon
+keep
+kitchen
+kitchenette
+ladies' room
+larder
+laundry room
+library
+living room
+lobby
+locker room
+loft
+lounge
+lunchroom
+rec room
+recovery room
+restroom room
+rumpus room
+salesroom
+salon
+schoolroom
+screen porch
+scullery
+showroom
+sick room
+sitting room
+solarium
+staff room
+stateroom
+stockroom
+storeroom
+studio
+study
+suite
+sunroom
+waiting room
+wardroom
+washroom
+water closet
+weight room
+wine cellar
+workroom
+panic room
+pantry
+parlor
+playroom
+pool room
+powder room
+prison cell
