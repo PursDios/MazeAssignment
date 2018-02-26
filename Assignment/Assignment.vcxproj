@@ -117,13 +117,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Dungeon.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Player.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Dungeon.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Maze.h" />
     <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Player.h" />
     <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.h" />
   </ItemGroup>
   <ItemGroup>

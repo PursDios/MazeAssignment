@@ -12,15 +12,15 @@ private:
 	Room* m_West;
 public:
 	Room();
-	void link();
-	string getString() { return m_roomName; }
+	void Link(int p_NESW, Room &p_room);
+	string getName() { return m_roomName; }
 	Room getNorth() { return *m_North; }
 	Room getEast() { return *m_East; }
 	Room getSouth() { return *m_South; }
 	Room getWest() { return *m_West; }
 };
 
-class SpecialRoom : Room
+class SpecialRoom : public Room
 {
 private:
 	Room* Special;
