@@ -2,6 +2,6 @@
 
 int main()
 {
-	MazeController mc;
+	MazeController* mc = new MazeController();
 	return 0;
 }

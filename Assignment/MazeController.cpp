@@ -1,12 +1,13 @@
 #include "stdlib.h"
 #include "iostream"
 #include "MazeController.h"
-#include "Dungeon.h"
+#include "Maze.h"
 #include "string"
 #include "vector"
+#include "Player.h"
 
 using namespace std;
-Dungeon d;
+Maze d;
 MazeController::MazeController(void)
 {
 	MainMenu();
@@ -49,7 +50,6 @@ void MazeController::StaticMaze(void)
 	d.Populate();
 	vector<Room*> rooms = d.getRoomList();
 	Player p;
-
 	rooms[0]->Link(2, *rooms[2]); //A TO C
 	rooms[2]->Link(1, *rooms[1]); //C TO B
 	rooms[2]->Link(2, *rooms[3]); //C TO D
@@ -69,6 +69,9 @@ void MazeController::StaticMaze(void)
 	rooms[5]->Link(1, *rooms[0]); //F TO A
 	rooms[12]->Link(3, *rooms[13]); //M TO N
 	rooms[12]->Link(1, *rooms[7]); //M TO H
+
+	d.setRoomList(rooms);
+	d.Play();
 }
 void MazeController::FileMaze(void)
 {

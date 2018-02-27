@@ -9,7 +9,6 @@ Room::Room()
 	random_device rd; // seed
 	mt19937 rng(rd()); // random-number engine
 	uniform_int_distribution<int> ranNum (0, 54);
-	ranNum(rng);
 	string line;
 	int random = ranNum(rng);
 
@@ -21,6 +20,7 @@ Room::Room()
 			if (num == random) //if the line number is the same as the randomly generated number
 			{
 				m_roomName = line; 
+				break;
 			}
 			num++;
 		}
@@ -46,4 +46,32 @@ void Room::Link(int p_NESW, Room &p_room)
 	default:
 		break;
 	}
+}
+string Room::getName()
+{
+	return m_roomName;
+}
+Room& Room::getNorth()
+{
+	return *m_North;
+}
+
+Room & Room::getEast()
+{
+	return *m_East;
+}
+
+Room & Room::getSouth()
+{
+	return *m_South;
+}
+
+Room & Room::getWest()
+{
+	return *m_West;
+}
+
+SpecialRoom::SpecialRoom() : Room()
+{
+
 }

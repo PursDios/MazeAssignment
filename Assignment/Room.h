@@ -13,11 +13,11 @@ private:
 public:
 	Room();
 	void Link(int p_NESW, Room &p_room);
-	string getName() { return m_roomName; }
-	Room getNorth() { return *m_North; }
-	Room getEast() { return *m_East; }
-	Room getSouth() { return *m_South; }
-	Room getWest() { return *m_West; }
+	string getName();
+	Room& getNorth();
+	Room& getEast();
+	Room& getSouth();
+	Room& getWest();
 };
 
 class SpecialRoom : public Room
@@ -25,5 +25,6 @@ class SpecialRoom : public Room
 private:
 	Room* Special;
 public:
-	Room getSpecial() { return *Special; }
+	SpecialRoom();
+	Room getSpecial();
 };
