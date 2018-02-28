@@ -31,10 +31,10 @@ void Maze::Play()
 	p.setCurrentLocation(rooms[0]);
 	bool finished = false;
 	int choice;
+	system("cls");
 
 	while (!finished)
 	{
-		system("CLS");
 		if (p.getCurrentLocation() != rooms[13])
 		{
 			cout << "You are Currently at the: " << p.getCurrentLocation()->getName() << "\n" << endl;
@@ -54,7 +54,7 @@ void Maze::Play()
 			}
 			else
 			{
-				cout << "1)There is Nothing to the East" << endl;
+				cout << "2)There is Nothing to the East" << endl;
 			}
 			if (&p.getCurrentLocation()->getSouth() != NULL)
 			{
@@ -62,7 +62,7 @@ void Maze::Play()
 			}
 			else
 			{
-				cout << "1)There is Nothing to the South" << endl;
+				cout << "3)There is Nothing to the South" << endl;
 			}
 			if (&p.getCurrentLocation()->getWest() != NULL)
 			{
@@ -70,7 +70,7 @@ void Maze::Play()
 			}
 			else
 			{
-				cout << "1)There is Nothing to the West" << endl;
+				cout << "4)There is Nothing to the West" << endl;
 			}
 			cin >> choice;
 			cin.clear();
@@ -79,22 +79,55 @@ void Maze::Play()
 			switch (choice)
 			{
 			case 1:
-				p.setCurrentLocation(&p.getCurrentLocation()->getNorth());
+				if (&p.getCurrentLocation()->getNorth() != NULL)
+				{
+					p.setCurrentLocation(&p.getCurrentLocation()->getNorth());
+					cout << "You walk north" << endl;
+				}
+				else
+					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
+
 				break;
 			case 2:
-				p.setCurrentLocation(&p.getCurrentLocation()->getEast());
+				if (&p.getCurrentLocation()->getEast() != NULL)
+				{
+					p.setCurrentLocation(&p.getCurrentLocation()->getEast());
+					cout << "You walk east" << endl;
+				}
+				else
+					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
+				
 				break;
 			case 3:
-				p.setCurrentLocation(&p.getCurrentLocation()->getSouth());
+				if (&p.getCurrentLocation()->getSouth() != NULL)
+				{
+					p.setCurrentLocation(&p.getCurrentLocation()->getSouth());
+					cout << "You walk south" << endl;
+				}
+				else
+					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
+				
 				break;
 			case 4:
-				p.setCurrentLocation(&p.getCurrentLocation()->getWest());
+				if (&p.getCurrentLocation()->getWest() != NULL)
+				{
+					p.setCurrentLocation(&p.getCurrentLocation()->getWest());
+					cout << "You walk West" << endl;
+				}
+				else
+					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
+				
 				break;
 			default:
+				cout << "Invalid Response" << endl;
 				break;
 			}
+			system("pause");
+			system("CLS");
 		}
 		else
 			finished = true;
 	}
+	cout << "You escaped the maze" << endl;
+	system("pause");
 }
