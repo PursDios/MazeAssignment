@@ -13,6 +13,7 @@ private:
 public:
 	Room();
 	void Link(int p_NESW, Room &p_room);
+	void generateName();
 	string getName();
 	Room& getNorth();
 	Room& getEast();

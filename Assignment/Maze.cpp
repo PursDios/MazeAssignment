@@ -6,27 +6,24 @@
 #include "Room.h"
 
 using namespace std;
-
+///Maze Constructor
 Maze::Maze()
 {
 
 }
-void Maze::Populate()
-{
-	m_RoomList.resize(14);
-	for (int i = 0; i < 14; i++)
-	{
-		Room* r = new Room();
-		m_RoomList[i] = r;
-	}
-}
+///Sets the priate roomlist to the given roomlist.
 void Maze::setRoomList(vector<Room*> p_roomlist)
 {
 	m_RoomList = p_roomlist;
 }
+///takes the current maze that's saved and uses it to play the game. 
 void Maze::Play()
 {
 	vector<Room*> rooms = m_RoomList;
+	for (int i = 0; i > 25; i++)
+	{
+		rooms[i] = new Room();
+	}
 	Player p;
 	p.setCurrentLocation(rooms[0]);
 	bool finished = false;
