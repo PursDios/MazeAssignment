@@ -26,7 +26,7 @@ void Maze::Play()
 	}
 	Player p;
 	p.setCurrentLocation(rooms[0]);
-	bool finished = false;
+	bool finished = false, win = false;
 	int choice;
 	system("cls");
 
@@ -69,6 +69,7 @@ void Maze::Play()
 			{
 				cout << "4)There is Nothing to the West" << endl;
 			}
+			cout << "99)Quit" << endl;
 			cin >> choice;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -115,16 +116,27 @@ void Maze::Play()
 					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
 				
 				break;
+
+			case 99:
+				finished = true;
+				break;
 			default:
 				cout << "Invalid Response" << endl;
 				break;
 			}
-			system("pause");
 			system("CLS");
 		}
 		else
+		{
 			finished = true;
+			win = true;
+		}
+			
 	}
-	cout << "You escaped the maze" << endl;
+	if (win)
+		cout << "You escaped the maze" << endl;
+	else
+		cout << "You died in the maze" << endl;
+
 	system("pause");
 }

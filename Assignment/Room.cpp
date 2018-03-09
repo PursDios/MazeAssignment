@@ -6,6 +6,7 @@
 Room::Room()
 {
 	generateName();
+	winningRoom = false;
 }
 void Room::Link(int p_NESW, Room &p_room)
 {
@@ -26,6 +27,10 @@ void Room::Link(int p_NESW, Room &p_room)
 	default:
 		break;
 	}
+}
+void Room::setWinningRoom()
+{
+	winningRoom = true;
 }
 string Room::getName()
 {
@@ -49,6 +54,10 @@ Room & Room::getSouth()
 Room & Room::getWest()
 {
 	return *m_West;
+}
+bool Room::getWinningRoom()
+{
+	return winningRoom;
 }
 void Room::generateName()
 {

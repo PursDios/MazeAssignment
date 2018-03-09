@@ -87,6 +87,7 @@ void MazeController::StaticMaze(void)
 	rooms[12]->Link(3, *rooms[13]); //M TO N
 
 	//sets the rooms vector to the private one in Maze.
+	rooms[13]->setWinningRoom();
 	m.setRoomList(rooms);
 	m.Play();
 }
@@ -126,12 +127,14 @@ void MazeController::FileMaze(void)
 				if(NESW[0] != "-")
 					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
 				if (NESW[1] != "-")
-					rooms[x]->Link(22, *rooms[stoi(NESW[1])]);
+					rooms[x]->Link(2, *rooms[stoi(NESW[1])]);
 				if (NESW[2] != "-")
 					rooms[x]->Link(3, *rooms[stoi(NESW[2])]);
 				if (NESW[3] != "-")
 					rooms[x]->Link(4, *rooms[stoi(NESW[3])]);
 				x++;
+				if (NESW[0] == "!")
+					rooms[stoi(NESW[1])]->setWinningRoom();
 			}
 		}
 		fileLoc.close();
