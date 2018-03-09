@@ -96,7 +96,7 @@ void MazeController::FileMaze(void)
 	vector<Room*> rooms;
 	rooms.resize(25);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
-	ifstream fileLoc("maze"); //filelocation (c# streamwriter)
+	ifstream fileLoc("maze.txt"); //filelocation (c# streamwriter)
 	string line, delimiter="/", token;
 	size_t pos = 0;
 	string NESW[4];
@@ -119,10 +119,10 @@ void MazeController::FileMaze(void)
 					line.erase(0, pos + delimiter.length());
 				}
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
-				rooms[i]->Link(1, *rooms[stoi(NESW[1])]);
-				rooms[i]->Link(2, *rooms[stoi(NESW[1])]);
-				rooms[i]->Link(3, *rooms[stoi(NESW[1])]);
-				rooms[i]->Link(4, *rooms[stoi(NESW[1])]);
+				rooms[i]->Link(1, *rooms[stoi(NESW[i])]);
+				rooms[i]->Link(2, *rooms[stoi(NESW[i])]);
+				rooms[i]->Link(3, *rooms[stoi(NESW[i])]);
+				rooms[i]->Link(4, *rooms[stoi(NESW[i])]);
 				i++;
 			}
 		}
