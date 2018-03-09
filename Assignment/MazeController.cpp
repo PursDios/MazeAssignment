@@ -58,7 +58,6 @@ void MazeController::StaticMaze(void)
 		rooms[i] = r;
 	}
 
-	Player p;
 	//links all the rooms to one another based on direction (North(1),East(2),South(3),West(4))
 	rooms[0]->Link(2, *rooms[2]); //A TO C
 	rooms[0]->Link(4, *rooms[5]); //A TO F
@@ -67,25 +66,25 @@ void MazeController::StaticMaze(void)
 	rooms[2]->Link(2, *rooms[3]); //C TO D
 	rooms[2]->Link(3, *rooms[7]); //C TO H
 	rooms[2]->Link(4, *rooms[0]); //C TO A
-	rooms[3]->Link(4, *rooms[2]); //D TO C
 	rooms[3]->Link(2, *rooms[4]); //D TO E
+	rooms[3]->Link(4, *rooms[2]); //D TO C
 	rooms[4]->Link(4, *rooms[3]); //E TO D
+	rooms[5]->Link(1, *rooms[0]); //F TO A
 	rooms[5]->Link(3, *rooms[10]); //F TO K
 	rooms[5]->Link(4, *rooms[9]); //F TO J
-	rooms[5]->Link(1, *rooms[0]); //F TO A
-								  //G?
+	rooms[6]->Link(1, *rooms[5]); //G to F
+	rooms[7]->Link(1, *rooms[2]); //H TO C
 	rooms[7]->Link(2, *rooms[8]); //H TO I
 	rooms[7]->Link(3, *rooms[12]); //H TO M
 	rooms[7]->Link(4, *rooms[11]); //H TO L
-	rooms[7]->Link(1, *rooms[2]); //H TO C
 	rooms[8]->Link(4, *rooms[7]); //I TO H
 	rooms[9]->Link(1, *rooms[5]); //J TO F
+	rooms[10]->Link(1, *rooms[5]); //K TO F
+	rooms[10]->Link(2, *rooms[11]); //K TO L
 	rooms[11]->Link(1, *rooms[7]); //L TO H
 	rooms[11]->Link(4, *rooms[10]); //L TO K
-	rooms[10]->Link(2, *rooms[11]); //K TO L
-	rooms[10]->Link(1, *rooms[5]); //K TO F
-	rooms[12]->Link(3, *rooms[13]); //M TO N
 	rooms[12]->Link(1, *rooms[7]); //M TO H
+	rooms[12]->Link(3, *rooms[13]); //M TO N
 
 	//sets the rooms vector to the private one in Maze.
 	m.setRoomList(rooms);
@@ -122,6 +121,7 @@ void MazeController::FileMaze(void)
 					line.erase(0, pos + delimiter.length());
 					i++;
 				}
+				i = 0;
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
 				if(NESW[0] != "-")
 					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
@@ -134,12 +134,14 @@ void MazeController::FileMaze(void)
 				x++;
 			}
 		}
+		fileLoc.close();
 	}
 	catch (exception e)
 	{
 		cout << "An error has occured when trying to read the file." << endl;
 	}
 	m.setRoomList(rooms);
+	m.Play();
 }
 void MazeController::RandomMaze(void)
 {
