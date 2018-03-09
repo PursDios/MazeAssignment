@@ -52,7 +52,7 @@ void MazeController::StaticMaze(void)
 	vector<Room*> rooms;
 	rooms.resize(25);
 	//adds rooms to the list
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		Room* r = new Room();
 		rooms[i] = r;
@@ -95,13 +95,19 @@ void MazeController::FileMaze(void)
 {
 	vector<Room*> rooms;
 	rooms.resize(25);
+	for (int i = 0; i < 25; i++)
+	{
+		Room* r = new Room();
+		rooms[i] = r;
+	}
+	rooms[1]->Link(2, *rooms[3]);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
 	ifstream fileLoc("maze.txt"); //filelocation (c# streamwriter)
 	string line, delimiter="/", token;
 	size_t pos = 0;
 	string NESW[4];
 
-	int i=0, x;
+	int i=0, x=0;
 	try
 	{
 		if (fileLoc.is_open())
@@ -111,19 +117,21 @@ void MazeController::FileMaze(void)
 				while ((pos = line.find(delimiter)) != string::npos)
 				{
 					token = line.substr(0, pos);
-					if (token != "-")
-					{
-						NESW[i] = token;
-						//Cannot make links here otherwise all directions will be set to the same room
-					}
+					NESW[i] = token;
+					//Cannot make links here otherwise all directions will be set to the same room
 					line.erase(0, pos + delimiter.length());
+					i++;
 				}
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
-				rooms[i]->Link(1, *rooms[stoi(NESW[i])]);
-				rooms[i]->Link(2, *rooms[stoi(NESW[i])]);
-				rooms[i]->Link(3, *rooms[stoi(NESW[i])]);
-				rooms[i]->Link(4, *rooms[stoi(NESW[i])]);
-				i++;
+				if(NESW[0] != "-")
+					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
+				if (NESW[1] != "-")
+					rooms[x]->Link(22, *rooms[stoi(NESW[1])]);
+				if (NESW[2] != "-")
+					rooms[x]->Link(3, *rooms[stoi(NESW[2])]);
+				if (NESW[3] != "-")
+					rooms[x]->Link(4, *rooms[stoi(NESW[3])]);
+				x++;
 			}
 		}
 	}
