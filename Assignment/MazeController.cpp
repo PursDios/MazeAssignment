@@ -104,7 +104,7 @@ void MazeController::FileMaze(void)
 	int i=0, x;
 	try
 	{
-		if (fileLoc.is_open)
+		if (fileLoc.is_open())
 		{
 			while (getline (fileLoc,line))
 			{
@@ -129,7 +129,7 @@ void MazeController::FileMaze(void)
 	}
 	catch (exception e)
 	{
-		cout << e.~exception << endl;
+		cout << "An error has occured when trying to read the file." << endl;
 	}
 	m.setRoomList(rooms);
 }
