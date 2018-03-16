@@ -69,6 +69,8 @@ void Maze::Play()
 			{
 				cout << "4)There is Nothing to the West" << endl;
 			}
+			cout << "5)Search for secret enterances" << endl;
+
 			cout << "99)Quit" << endl;
 			cin >> choice;
 			cin.clear();
@@ -116,6 +118,16 @@ void Maze::Play()
 					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
 				
 				break;
+			case 5:
+				if (typeid(p.getCurrentLocation()) == typeid(SpecialRoom*))
+				{
+					SpecialRoom* r = static_cast<SpecialRoom*>(p.getCurrentLocation());
+					p.setCurrentLocation(&r->getSpecial());
+					cout << "5) You travel through a secret enterance to the " << r->getSpecial().getName() << endl;
+				}
+				else
+					cout << "You look for secret enterances. You look quite silly." << endl;
+				break;
 
 			case 99:
 				finished = true;
@@ -124,11 +136,13 @@ void Maze::Play()
 				cout << "Invalid Response" << endl;
 				break;
 			}
+			system("pause");
 			system("CLS");
 		}
 		else
 		{
 			finished = true;
+
 			win = true;
 		}
 			

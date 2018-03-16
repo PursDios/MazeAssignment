@@ -31,4 +31,5 @@ private:
 public:
 	SpecialRoom();
 	Room getSpecial();
+	void setSpecialRoom(Room& roomPtr);
 };

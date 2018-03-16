@@ -57,6 +57,9 @@ void MazeController::StaticMaze(void)
 		Room* r = new Room();
 		rooms[i] = r;
 	}
+	SpecialRoom* r = new SpecialRoom();
+	r->setSpecialRoom(*rooms[6]);
+	rooms[2] = r;
 
 	//links all the rooms to one another based on direction (North(1),East(2),South(3),West(4))
 	rooms[0]->Link(2, *rooms[2]); //A TO C

@@ -88,5 +88,13 @@ void Room::generateName()
 
 SpecialRoom::SpecialRoom() : Room()
 {
-
+	generateName();
+}
+Room SpecialRoom::getSpecial()
+{
+	return *Special;
+}
+void SpecialRoom::setSpecialRoom(Room& r)
+{
+	Special = &r;
 }
