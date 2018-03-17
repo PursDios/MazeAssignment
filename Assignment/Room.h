@@ -10,6 +10,7 @@ private:
 	Room* m_East;
 	Room* m_South;
 	Room* m_West;
+	Room* m_Secret;
 	bool winningRoom;
 public:
 	Room();
@@ -22,14 +23,5 @@ public:
 	Room& getEast();
 	Room& getSouth();
 	Room& getWest();
-};
-
-class SpecialRoom : public Room
-{
-private:
-	Room* Special;
-public:
-	SpecialRoom();
-	Room getSpecial();
-	void setSpecialRoom(Room& roomPtr);
+	Room& getSecret();
 };

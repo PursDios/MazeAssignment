@@ -5,6 +5,6 @@ class Player
 private:
 	Room* m_CurrentLocation;
 public:
-	Room * getCurrentLocation() { return m_CurrentLocation; }
+	Room * getCurrentLocation();
 	void setCurrentLocation(Room* room);
 };

@@ -24,6 +24,9 @@ void Room::Link(int p_NESW, Room &p_room)
 	case 4:
 		m_West = &p_room;
 		break;
+	case 5:
+		m_Secret = &p_room;
+		break;
 	default:
 		break;
 	}
@@ -84,17 +87,4 @@ void Room::generateName()
 		fileLoc.close(); //close file.
 	}
 	//https://www.uow.edu.au/~lukes/TEXTBOOK/notes-cpp/io/readtextfile.html
-}
-
-SpecialRoom::SpecialRoom() : Room()
-{
-	generateName();
-}
-Room SpecialRoom::getSpecial()
-{
-	return *Special;
-}
-void SpecialRoom::setSpecialRoom(Room& r)
-{
-	Special = &r;
 }

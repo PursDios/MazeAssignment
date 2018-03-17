@@ -75,7 +75,7 @@ void Maze::Play()
 			cin >> choice;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+			SpecialRoom * r = new SpecialRoom();
 			switch (choice)
 			{
 			case 1:
@@ -119,15 +119,7 @@ void Maze::Play()
 				
 				break;
 			case 5:
-				if (typeid(p.getCurrentLocation()) == typeid(SpecialRoom*))
-				{
-					SpecialRoom* r = static_cast<SpecialRoom*>(p.getCurrentLocation());
-					p.setCurrentLocation(&r->getSpecial());
-					cout << "5) You travel through a secret enterance to the " << r->getSpecial().getName() << endl;
-				}
-				else
-					cout << "You look for secret enterances. You look quite silly." << endl;
-				break;
+				
 
 			case 99:
 				finished = true;
