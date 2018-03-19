@@ -10,7 +10,6 @@ private:
 	Room* m_East;
 	Room* m_South;
 	Room* m_West;
-	Room* m_Secret;
 	bool winningRoom;
 public:
 	Room();
@@ -19,9 +18,18 @@ public:
 	void generateName();
 	string getName();
 	bool getWinningRoom();
-	Room& getNorth();
-	Room& getEast();
-	Room& getSouth();
-	Room& getWest();
-	Room& getSecret();
+	Room* getNorth();
+	Room* getEast();
+	Room* getSouth();
+	Room* getWest();
+	virtual void printConnectedRooms();
+};
+class SpecialRoom : public Room
+{
+private:
+	Room* m_special;
+public:
+	Room* getSpecial();
+	void setSpecial(Room&p_room);
+	void printConnectedRooms();
 };

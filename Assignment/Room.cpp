@@ -2,7 +2,9 @@
 #include "random"
 #include "fstream"
 #include "string"
+#include "iostream"
 
+using namespace std;
 Room::Room()
 {
 	generateName();
@@ -24,9 +26,6 @@ void Room::Link(int p_NESW, Room &p_room)
 	case 4:
 		m_West = &p_room;
 		break;
-	case 5:
-		m_Secret = &p_room;
-		break;
 	default:
 		break;
 	}
@@ -39,24 +38,24 @@ string Room::getName()
 {
 	return m_roomName;
 }
-Room& Room::getNorth()
+Room* Room::getNorth()
 {
-	return *m_North;
+	return m_North;
 }
 
-Room & Room::getEast()
+Room*  Room::getEast()
 {
-	return *m_East;
+	return m_East;
 }
 
-Room & Room::getSouth()
+Room * Room::getSouth()
 {
-	return *m_South;
+	return m_South;
 }
 
-Room & Room::getWest()
+Room * Room::getWest()
 {
-	return *m_West;
+	return m_West;
 }
 bool Room::getWinningRoom()
 {
@@ -87,4 +86,42 @@ void Room::generateName()
 		fileLoc.close(); //close file.
 	}
 	//https://www.uow.edu.au/~lukes/TEXTBOOK/notes-cpp/io/readtextfile.html
+}
+void Room::printConnectedRooms()
+{
+	if (m_North != NULL)
+		cout << "1)N: " << m_North->getName() << endl;
+	else
+		cout << "1)N: Nothing" << endl;
+
+	if (m_East != NULL)
+		cout << "2)E: " << m_East->getName() << endl;
+	else
+		cout << "2)E: Nothing" << endl;
+
+	if (m_South != NULL)
+		cout << "3)S: " << m_South->getName() << endl;
+	else
+		cout << "3)S: Nothing" << endl;
+
+	if (m_West != NULL)
+		cout << "4)W: " << m_West->getName() << endl;
+	else
+		cout << "4)W: Nothing" << endl;
+}
+Room* SpecialRoom::getSpecial()
+{
+	return m_special;
+}
+void SpecialRoom::setSpecial(Room& p_room)
+{
+	m_special = &p_room;
+}
+void SpecialRoom::printConnectedRooms()
+{
+	Room::printConnectedRooms();
+	if (m_special != NULL)
+		cout << "5)X: There seems to be something off about that wall..." << endl;
+	else
+		cout << "5)X: Nothing seems out of place in this room" << endl;
 }

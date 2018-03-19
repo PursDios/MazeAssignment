@@ -46,6 +46,7 @@ void MazeController::MainMenu(void)
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	} while (!valid);
 }
+///a statically designed maze.
 void MazeController::StaticMaze(void)
 {
 	//makes a list of rooms(vector)
@@ -57,6 +58,12 @@ void MazeController::StaticMaze(void)
 		Room* r = new Room();
 		rooms[i] = r;
 	}
+	//Creating a special room
+	SpecialRoom* r = new SpecialRoom();
+	//setting the special room using the unique method unique to the subclass
+	r->setSpecial(*rooms[6]);
+	//assigning it to element 2 in the vector
+	rooms[2] = r; 
 
 	//links all the rooms to one another based on direction (North(1),East(2),South(3),West(4))
 	rooms[0]->Link(2, *rooms[2]); //A TO C
@@ -66,14 +73,13 @@ void MazeController::StaticMaze(void)
 	rooms[2]->Link(2, *rooms[3]); //C TO D
 	rooms[2]->Link(3, *rooms[7]); //C TO H
 	rooms[2]->Link(4, *rooms[0]); //C TO A
-	rooms[2]->Link(5, *rooms[6]); //C TO G gfgfgf
 	rooms[3]->Link(2, *rooms[4]); //D TO E
 	rooms[3]->Link(4, *rooms[2]); //D TO C
 	rooms[4]->Link(4, *rooms[3]); //E TO D
 	rooms[5]->Link(1, *rooms[0]); //F TO A
 	rooms[5]->Link(3, *rooms[10]); //F TO K
 	rooms[5]->Link(4, *rooms[9]); //F TO J
-	rooms[6]->Link(1, *rooms[5]); //G to F
+	rooms[6]->Link(1, *rooms[2]); //G to C
 	rooms[7]->Link(1, *rooms[2]); //H TO C
 	rooms[7]->Link(2, *rooms[8]); //H TO I
 	rooms[7]->Link(3, *rooms[12]); //H TO M
