@@ -6,6 +6,7 @@
 #include "vector"
 #include "Player.h"
 #include "fstream"
+#include "random"
 
 using namespace std;
 Maze m;
@@ -155,5 +156,22 @@ void MazeController::FileMaze(void)
 }
 void MazeController::RandomMaze(void)
 {
+	vector<Room*> rooms;
+	random_device rd; // seed
+	mt19937 rng(rd()); // random-number engine
+	uniform_int_distribution<int> ranNum(1, 25);
 
+	int totalRooms = ranNum(rng);
+	rooms.resize(totalRooms);
+
+	for (int i = 0;i < totalRooms;i++)
+	{
+		rooms[i] = new Room();
+	}
+	for each (Room* var in rooms)
+	{
+		uniform_int_distribution<int> ranNum(1, 4);
+		int connections = ranNum(rng);
+
+	}
 }

@@ -6,11 +6,6 @@
 #include "Room.h"
 
 using namespace std;
-///Maze Constructor
-Maze::Maze()
-{
-
-}
 ///Sets the priate roomlist to the given roomlist.
 void Maze::setRoomList(vector<Room*> p_roomlist)
 {
@@ -31,48 +26,12 @@ void Maze::Play()
 	{
 		if (p.getCurrentLocation() != rooms[13])
 		{
-			/*cout << "You are Currently at the: " << p.getCurrentLocation()->getName() << "\n" << endl;
-			cout << "Where would you like to go?" << endl;
-
-			if (p.getCurrentLocation()->getNorth() != NULL)
-			{
-				cout << "1)North to the: " << p.getCurrentLocation()->getNorth()->getName() << endl;
-			}
-			else
-			{
-				cout << "1)There is Nothing to the North" << endl;
-			}
-			if (p.getCurrentLocation()->getEast() != NULL)
-			{
-				cout << "2)East to the: " << p.getCurrentLocation()->getEast()->getName() << endl;
-			}
-			else
-			{
-				cout << "2)There is Nothing to the East" << endl;
-			}
-			if (p.getCurrentLocation()->getSouth() != NULL)
-			{
-				cout << "3)South to the: " << p.getCurrentLocation()->getSouth()->getName() << endl;
-			}
-			else
-			{
-				cout << "3)There is Nothing to the South" << endl;
-			}
-			if (p.getCurrentLocation()->getWest() != NULL)
-			{
-				cout << "4)West to the: " << p.getCurrentLocation()->getWest()->getName() << endl;
-			}
-			else
-			{
-				cout << "4)There is Nothing to the West" << endl;
-			}
-			cout << "5)Search for secret enterances" << endl;
-			*/
 			p.getCurrentLocation()->printConnectedRooms();
 			cout << "99)Quit" << endl;
 			cin >> choice;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 			switch (choice)
 			{
 			case 1:

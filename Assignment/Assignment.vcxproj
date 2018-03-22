@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{EFBAB5AC-BD16-41FB-9F67-6D4FAA4C7706}</ProjectGuid>
     <RootNamespace>Assignment</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -116,20 +116,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Maze.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Player.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Source.cpp" />
+    <ClCompile Include="MazeController.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Maze.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Player.h" />
-    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.h" />
+    <ClInclude Include="MazeController.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Room.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\maze.txt" />
-    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\roomnames.txt" />
+    <Text Include="maze.txt" />
+    <Text Include="roomnames.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
