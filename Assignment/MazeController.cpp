@@ -175,6 +175,8 @@ void MazeController::RandomMaze(void)
 		int direction = otherRan(rng);
 		int link = -1;
 		int j = 0;
+
+		//check the number of connections that a room needs to have
 		switch (connections)
 		{
 		case 1:
@@ -182,7 +184,7 @@ void MazeController::RandomMaze(void)
 			while (link < i)
 			{
 				link = roomRan(rng);
-				direction = otherRan(rng);
+				direction = otherRan(rng); 
 			}
 			r->Link(direction, *rooms[link -1]);
 			break;
