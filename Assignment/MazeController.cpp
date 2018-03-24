@@ -6,6 +6,7 @@
 #include "vector"
 #include "Player.h"
 #include "fstream"
+#include "random"
 
 using namespace std;
 Maze m;
@@ -63,7 +64,7 @@ void MazeController::StaticMaze(void)
 	//setting the special room using the unique method unique to the subclass
 	r->setSpecial(*rooms[6]);
 	//assigning it to element 2 in the vector
-	rooms[2] = r; 
+	rooms[2] = r;
 
 	//links all the rooms to one another based on direction (North(1),East(2),South(3),West(4))
 	rooms[0]->Link(2, *rooms[2]); //A TO C
@@ -93,9 +94,8 @@ void MazeController::StaticMaze(void)
 	rooms[12]->Link(1, *rooms[7]); //M TO H
 	rooms[12]->Link(3, *rooms[13]); //M TO N
 
-	//sets the rooms vector to the private one in Maze.
-	rooms[13]->setWinningRoom();
 	m.setRoomList(rooms);
+	m.setFinish(rooms[13]);
 	m.Play();
 }
 void MazeController::FileMaze(void)
@@ -110,16 +110,16 @@ void MazeController::FileMaze(void)
 	rooms[1]->Link(2, *rooms[3]);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
 	ifstream fileLoc("maze.txt"); //filelocation (c# streamwriter)
-	string line, delimiter="/", token;
+	string line, delimiter = "/", token;
 	size_t pos = 0;
 	string NESW[4];
 
-	int i=0, x=0;
+	int i = 0, x = 0;
 	try
 	{
 		if (fileLoc.is_open())
 		{
-			while (getline (fileLoc,line))
+			while (getline(fileLoc, line))
 			{
 				while ((pos = line.find(delimiter)) != string::npos)
 				{
@@ -131,17 +131,17 @@ void MazeController::FileMaze(void)
 				}
 				i = 0;
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
-				if(NESW[0] != "-")
+				if (NESW[0] != "-" && NESW[0] != "!")
 					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
-				if (NESW[1] != "-")
+				if (NESW[1] != "-" && NESW[0] != "!")
 					rooms[x]->Link(2, *rooms[stoi(NESW[1])]);
-				if (NESW[2] != "-")
+				if (NESW[2] != "-" && NESW[0] != "!")
 					rooms[x]->Link(3, *rooms[stoi(NESW[2])]);
-				if (NESW[3] != "-")
+				if (NESW[3] != "-" && NESW[0] != "!")
 					rooms[x]->Link(4, *rooms[stoi(NESW[3])]);
 				x++;
 				if (NESW[0] == "!")
-					rooms[stoi(NESW[1])]->setWinningRoom();
+					m.setFinish(rooms[stoi(NESW[1])]);
 			}
 		}
 		fileLoc.close();
@@ -155,5 +155,89 @@ void MazeController::FileMaze(void)
 }
 void MazeController::RandomMaze(void)
 {
+	vector<Room*> rooms;
+	random_device rd; // seed
+	mt19937 rng(rd()); // random-number engine
+	uniform_int_distribution<int> Limit(1, 25); //Used to generate the totalRooms.
+	uniform_int_distribution<int> otherRan(1, 4); //used for generating direction and the number of connections. 
+	int totalRooms = Limit(rng);
+	rooms.resize(totalRooms);
+	int i=0;
 
+	for (int i = 0;i < totalRooms;i++)
+	{
+		rooms[i] = new Room();
+	}
+	uniform_int_distribution<int> roomRan(1, totalRooms); //Used to randomly assign rooms
+	for(Room* r: rooms)
+	{
+		int connections = otherRan(rng);
+		int direction = otherRan(rng);
+		int link = -1;
+		int j = 0;
+		switch (connections)
+		{
+		case 1:
+			link = -1;
+			while (link < i)
+			{
+				link = roomRan(rng);
+				direction = otherRan(rng);
+			}
+			r->Link(direction, *rooms[link -1]);
+			break;
+		case 2:
+			j = 0;
+			while (j != 2)
+			{
+				link = -1;
+				while (link < i)
+				{
+					link = roomRan(rng);
+					direction = otherRan(rng);
+				}
+				r->Link(direction, *rooms[link -1]);
+				++j;
+			}
+			break;
+		case 3:
+			j = 0;
+			link = -1;
+			while (j != 3)
+			{
+				link = -1;
+				while (link < i)
+				{
+					link = roomRan(rng);
+					direction = otherRan(rng);
+				}
+				r->Link(direction, *rooms[link -1]);
+				++j;
+			}
+			break;
+		case 4:
+			j = 0;
+			direction = otherRan(rng);
+			link = -1;
+			while (j != 4)
+			{
+				link = -1;
+				while (link < i)
+				{
+					link = roomRan(rng);
+					direction = otherRan(rng);
+				}
+				r->Link(direction, *rooms[link -1]);
+				++j;
+			}
+			break;
+		default:
+			cout << "Something has gone seriously wrong" << endl;
+			break;
+		}
+		++i;
+	}
+	m.setRoomList(rooms);
+	m.setFinish(rooms[totalRooms -1]);
+	m.Play();
 }

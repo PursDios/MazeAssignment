@@ -7,9 +7,10 @@ class Maze
 {
 private:
 	vector<Room*> m_RoomList;
+	Room* m_Finish;
 public:
-	Maze();
 	void setRoomList(vector<Room*> rooms);
+	void setFinish(Room* room);
 	void Play();
 	vector<Room*> getRoomList() { return m_RoomList; };
 };

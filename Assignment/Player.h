@@ -3,7 +3,7 @@
 class Player
 {
 private:
-	Room* m_CurrentLocation;
+	Room * m_CurrentLocation;
 public:
 	Room * getCurrentLocation();
 	void setCurrentLocation(Room* room);
