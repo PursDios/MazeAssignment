@@ -11,6 +11,10 @@ void Maze::setRoomList(vector<Room*> p_roomlist)
 {
 	m_RoomList = p_roomlist;
 }
+void Maze::setFinish(Room* room)
+{
+	m_Finish = room;
+}
 ///takes the current maze that's saved and uses it to play the game. 
 void Maze::Play()
 {
@@ -24,7 +28,7 @@ void Maze::Play()
 	system("pause");
 	while (!finished)
 	{
-		if (p.getCurrentLocation() != rooms[13])
+		if (p.getCurrentLocation() != m_Finish)
 		{
 			p.getCurrentLocation()->printConnectedRooms();
 			cout << "99)Quit" << endl;
@@ -52,7 +56,7 @@ void Maze::Play()
 				}
 				else
 					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
-				
+
 				break;
 			case 3:
 				if (p.getCurrentLocation()->getSouth() != NULL)
@@ -62,7 +66,7 @@ void Maze::Play()
 				}
 				else
 					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
-				
+
 				break;
 			case 4:
 				if (p.getCurrentLocation()->getWest() != NULL)
@@ -72,7 +76,7 @@ void Maze::Play()
 				}
 				else
 					cout << "You walk into the wall. Does that make you feel good about yourself?" << endl;
-				
+
 				break;
 			case 5:
 				if (typeid(*p.getCurrentLocation()) == typeid(SpecialRoom))
@@ -100,7 +104,7 @@ void Maze::Play()
 
 			win = true;
 		}
-			
+
 	}
 	if (win)
 		cout << "You escaped the maze" << endl;
