@@ -4,7 +4,6 @@
 #include "Maze.h"
 #include "string"
 #include "vector"
-#include "Player.h"
 #include "fstream"
 #include "random"
 
@@ -181,24 +180,62 @@ void MazeController::RandomMaze(void)
 		{
 		case 1:
 			link = -1;
-			while (link < i)
+			while (link < i && link != i)
 			{
 				link = roomRan(rng);
 				direction = otherRan(rng); 
 			}
 			r->Link(direction, *rooms[link -1]);
+			switch(direction)
+			{
+			case 1:
+				direction = 3;
+				rooms[link - 1]->Link(direction, *r);
+				break;
+			case 2:
+				direction = 4;
+				rooms[link - 1]->Link(direction, *r);
+				break;
+			case 3:
+				direction = 1;
+				rooms[link - 1]->Link(direction, *r);
+				break;
+			case 4:
+				direction = 2;
+				rooms[link - 1]->Link(direction, *r);
+				break;
+			}
 			break;
 		case 2:
 			j = 0;
 			while (j != 2)
 			{
 				link = -1;
-				while (link < i)
+				while (link < i && link != i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
 				}
 				r->Link(direction, *rooms[link -1]);
+				switch (direction)
+				{
+				case 1:
+					direction = 3;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 2:
+					direction = 4;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 3:
+					direction = 1;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 4:
+					direction = 2;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				}
 				++j;
 			}
 			break;
@@ -208,12 +245,31 @@ void MazeController::RandomMaze(void)
 			while (j != 3)
 			{
 				link = -1;
-				while (link < i)
+				while (link < i && link != i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
 				}
 				r->Link(direction, *rooms[link -1]);
+				switch (direction)
+				{
+				case 1:
+					direction = 3;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 2:
+					direction = 4;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 3:
+					direction = 1;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 4:
+					direction = 2;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				}
 				++j;
 			}
 			break;
@@ -224,12 +280,31 @@ void MazeController::RandomMaze(void)
 			while (j != 4)
 			{
 				link = -1;
-				while (link < i)
+				while (link < i && link != i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
 				}
 				r->Link(direction, *rooms[link -1]);
+				switch (direction)
+				{
+				case 1:
+					direction = 3;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 2:
+					direction = 4;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 3:
+					direction = 1;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				case 4:
+					direction = 2;
+					rooms[link - 1]->Link(direction, *r);
+					break;
+				}
 				++j;
 			}
 			break;
