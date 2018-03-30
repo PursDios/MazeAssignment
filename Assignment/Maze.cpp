@@ -40,7 +40,7 @@ void Maze::Play()
 			cout << "You are currently in the: " << getCurrentLocation()->getName() << endl;
 			//Prints the locations and directions of all the rooms that are connected to the current room.
 			getCurrentLocation()->printConnectedRooms();
-			cout << "99)Quit" << endl;
+			cout << "88)Help\n99)Quit" << endl;
 			cin >> choice;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -98,6 +98,9 @@ void Maze::Play()
 				else
 					cout << "Invalid Response" << endl;
 				break;
+			case 88:
+				cout << "You are in a maze, your job is to try and escape the maze. \nPress a number to select which direction you would like to travel in e.g. 1) is north, 3) is south etc.\nWhen you reach the end you will be notified and will be returned to the main menu." << endl;
+				break;
 			case 99:
 				finished = true;
 				break;
@@ -120,7 +123,8 @@ void Maze::Play()
 		cout << "You escaped the maze" << endl;
 	else
 		cout << "You died in the maze" << endl;
-	system("pause");
+
+	cout << "Press any key to continue..." << endl;
 }
 
 vector<Room*> Maze::getRoomList()

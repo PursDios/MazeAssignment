@@ -16,26 +16,26 @@ MazeController::MazeController(void)
 void MazeController::MainMenu(void)
 {
 	int choice;
-	bool valid = false;
+	bool exit = false;
 	do
 	{
 		system("CLS");
 		cout << "Please select which maze you would like to do:" << endl;
-		cout << "1)Static Maze\n2)File Maze\n3)Random Maze" << endl;
+		cout << "1)Static Maze\n2)File Maze\n3)Random Maze\n99)exit" << endl;
 		cin >> choice;
 		switch (choice)
 		{
 		case 1:
 			StaticMaze();
-			valid = true;
 			break;
 		case 2:
 			FileMaze();
-			valid = true;
 			break;
 		case 3:
 			RandomMaze();
-			valid = true;
+			break;
+		case 99:
+			exit = true;
 			break;
 		default:
 			cout << "Invalid Selection please try again" << endl;
@@ -44,7 +44,7 @@ void MazeController::MainMenu(void)
 		}
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	} while (!valid);
+	} while (!exit);
 }
 ///a statically designed maze.
 void MazeController::StaticMaze(void)
@@ -159,18 +159,22 @@ void MazeController::RandomMaze(void)
 	mt19937 rng(rd()); // random-number engine
 	uniform_int_distribution<int> Limit(1, 25); //Used to generate the totalRooms.
 	uniform_int_distribution<int> otherRan(1, 4); //used for generating direction and the number of connections. 
-	int totalRooms = Limit(rng);
-	rooms.resize(totalRooms);
+	int totalRooms = Limit(rng); //generating the total number of rooms
+	rooms.resize(totalRooms); //resizing the vector to be the same size as the total number of rooms
 	int i=0;
 
+	//creating a list of rooms equal to totalrooms
 	for (int i = 0;i < totalRooms;i++)
 	{
 		rooms[i] = new Room();
 	}
 	uniform_int_distribution<int> roomRan(1, totalRooms); //Used to randomly assign rooms
+	//for each room create links.
 	for(Room* r: rooms)
 	{
+		//randomly generate the number of connections a room will have
 		int connections = otherRan(rng);
+		//randomly generate the direction
 		int direction = otherRan(rng);
 		int link = -1;
 		int j = 0;
@@ -180,8 +184,10 @@ void MazeController::RandomMaze(void)
 		{
 		case 1:
 			link = -1;
-			while (link < i && link != i)
+			//while the link is less than the current room and if the room is itself.
+			while (link < i || link == i )
 			{
+				//randomize the room it links to
 				link = roomRan(rng);
 				direction = otherRan(rng); 
 			}
@@ -211,7 +217,7 @@ void MazeController::RandomMaze(void)
 			while (j != 2)
 			{
 				link = -1;
-				while (link < i && link != i)
+				while (link < i || link == i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
@@ -245,7 +251,7 @@ void MazeController::RandomMaze(void)
 			while (j != 3)
 			{
 				link = -1;
-				while (link < i && link != i)
+				while (link < i || link == i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
@@ -280,7 +286,7 @@ void MazeController::RandomMaze(void)
 			while (j != 4)
 			{
 				link = -1;
-				while (link < i && link != i)
+				while (link < i || link == i)
 				{
 					link = roomRan(rng);
 					direction = otherRan(rng);
