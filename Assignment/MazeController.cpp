@@ -11,8 +11,10 @@ using namespace std;
 Maze m;
 MazeController::MazeController(void)
 {
+	//calls the main menu
 	MainMenu();
 }
+///the main menu for the program.
 void MazeController::MainMenu(void)
 {
 	int choice;
@@ -97,6 +99,7 @@ void MazeController::StaticMaze(void)
 	m.setFinish(rooms[13]);
 	m.Play();
 }
+///reads in a maze from a file
 void MazeController::FileMaze(void)
 {
 	vector<Room*> rooms;
@@ -109,20 +112,24 @@ void MazeController::FileMaze(void)
 	rooms[1]->Link(2, *rooms[3]);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
 	ifstream fileLoc("maze.txt"); //filelocation (c# streamwriter)
-	string line, delimiter = "/", token;
+	string line, delimiter = "/", token; //the delimiter the program will search for.
 	size_t pos = 0;
 	string NESW[4];
 
 	int i = 0, x = 0;
 	try
 	{
+		//try and open the file.
 		if (fileLoc.is_open())
 		{
+			//while there are still lines to get.
 			while (getline(fileLoc, line))
 			{
+				//for each delimiter on that line.
 				while ((pos = line.find(delimiter)) != string::npos)
 				{
 					token = line.substr(0, pos);
+					//store information before the next delimiter in NESW[i]
 					NESW[i] = token;
 					//Cannot make links here otherwise all directions will be set to the same room
 					line.erase(0, pos + delimiter.length());
@@ -130,6 +137,7 @@ void MazeController::FileMaze(void)
 				}
 				i = 0;
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
+				//if the NESW value is not a dash and is not an exclimation mark then create a link.
 				if (NESW[0] != "-" && NESW[0] != "!")
 					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
 				if (NESW[1] != "-" && NESW[0] != "!")
@@ -152,6 +160,7 @@ void MazeController::FileMaze(void)
 	m.setRoomList(rooms);
 	m.Play();
 }
+///randomly generates the maze.
 void MazeController::RandomMaze(void)
 {
 	vector<Room*> rooms;

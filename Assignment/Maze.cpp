@@ -10,14 +10,17 @@ void Maze::setRoomList(vector<Room*> p_roomlist)
 {
 	m_RoomList = p_roomlist;
 }
+///returns the players current location
 Room* Maze::getCurrentLocation()
 {
 	return m_CurrentLocation;
 }
+///sets the players current location
 void Maze::setCurrentLocation(Room* room)
 {
 	m_CurrentLocation = room;
 }
+///sets the end room of the maze
 void Maze::setFinish(Room* room)
 {
 	m_Finish = room;
@@ -126,7 +129,7 @@ void Maze::Play()
 
 	cout << "Press any key to continue..." << endl;
 }
-
+///returns the list of rooms.
 vector<Room*> Maze::getRoomList()
 {
 	return m_RoomList;
