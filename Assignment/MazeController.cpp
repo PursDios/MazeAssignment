@@ -5,7 +5,7 @@
 #include "string"
 #include "vector"
 #include "fstream"
-#include "random"
+#include <random>
 
 using namespace std;
 Maze m;
@@ -166,168 +166,147 @@ void MazeController::RandomMaze(void)
 	vector<Room*> rooms;
 	random_device rd; // seed
 	mt19937 rng(rd()); // random-number engine
-	uniform_int_distribution<int> Limit(1, 25); //Used to generate the totalRooms.
-	uniform_int_distribution<int> otherRan(1, 4); //used for generating direction and the number of connections. 
-	int totalRooms = Limit(rng); //generating the total number of rooms
-	rooms.resize(totalRooms); //resizing the vector to be the same size as the total number of rooms
-	int i=0;
-
-	//creating a list of rooms equal to totalrooms
-	for (int i = 0;i < totalRooms;i++)
+	uniform_int_distribution<int> Limit(1, 50); //Used to generate the totalRooms.
+	uniform_int_distribution<int> otherRan(1, 4);
+	int totalRooms = Limit(rng);
+	uniform_int_distribution<int> linkNum(1, totalRooms);
+	rooms.resize(totalRooms);
+	for (int i = 0; i < totalRooms; i++)
 	{
 		rooms[i] = new Room();
 	}
-	uniform_int_distribution<int> roomRan(1, totalRooms); //Used to randomly assign rooms
-	//for each room create links.
-	for(Room* r: rooms)
+	int i = 0;
+	for (Room* r : rooms)
 	{
-		//randomly generate the number of connections a room will have
-		int connections = otherRan(rng);
-		//randomly generate the direction
-		int direction = otherRan(rng);
-		int link = -1;
-		int j = 0;
-
-		//check the number of connections that a room needs to have
+		int j = 0, connections = otherRan(rng), link = -1;
 		switch (connections)
 		{
 		case 1:
-			link = -1;
-			//while the link is less than the current room and if the room is itself.
-			while (link < i || link == i )
+			link = linkNum(rng);
+			while (link < i || link - 1 == i)
 			{
-				//randomize the room it links to
-				link = roomRan(rng);
-				direction = otherRan(rng); 
+				link = linkNum(rng);
 			}
-			r->Link(direction, *rooms[link -1]);
-			switch(direction)
+			if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
 			{
-			case 1:
-				direction = 3;
-				rooms[link - 1]->Link(direction, *r);
-				break;
-			case 2:
-				direction = 4;
-				rooms[link - 1]->Link(direction, *r);
-				break;
-			case 3:
-				direction = 1;
-				rooms[link - 1]->Link(direction, *r);
-				break;
-			case 4:
-				direction = 2;
-				rooms[link - 1]->Link(direction, *r);
-				break;
+				r->Link(1, *rooms[link - 1]);
+				rooms[link - 1]->Link(3, *r);
+			}
+			else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+			{
+				r->Link(2, *rooms[link - 1]);
+				rooms[link - 1]->Link(4, *r);
+			}
+			else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+			{
+				r->Link(3, *rooms[link - 1]);
+				rooms[link - 1]->Link(1, *r);
+			}
+			else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+			{
+				r->Link(4, *rooms[link - 1]);
+				rooms[link - 1]->Link(2, *r);
 			}
 			break;
 		case 2:
-			j = 0;
 			while (j != 2)
 			{
-				link = -1;
-				while (link < i || link == i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				switch (direction)
+				if (r->getNorth() == nullptr && rooms[link -1]->getSouth() == nullptr)
 				{
-				case 1:
-					direction = 3;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 2:
-					direction = 4;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 3:
-					direction = 1;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 4:
-					direction = 2;
-					rooms[link - 1]->Link(direction, *r);
-					break;
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
 				}
-				++j;
+				else if (r->getEast() == nullptr && rooms[link -1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link-1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link-1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
 		case 3:
-			j = 0;
-			link = -1;
 			while (j != 3)
 			{
-				link = -1;
-				while (link < i || link == i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				switch (direction)
+				if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
 				{
-				case 1:
-					direction = 3;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 2:
-					direction = 4;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 3:
-					direction = 1;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 4:
-					direction = 2;
-					rooms[link - 1]->Link(direction, *r);
-					break;
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
 				}
-				++j;
+				else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
 		case 4:
-			j = 0;
-			direction = otherRan(rng);
-			link = -1;
 			while (j != 4)
 			{
-				link = -1;
-				while (link < i || link == i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				switch (direction)
+				if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
 				{
-				case 1:
-					direction = 3;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 2:
-					direction = 4;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 3:
-					direction = 1;
-					rooms[link - 1]->Link(direction, *r);
-					break;
-				case 4:
-					direction = 2;
-					rooms[link - 1]->Link(direction, *r);
-					break;
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
 				}
-				++j;
+				else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
+
 		default:
-			cout << "Something has gone seriously wrong" << endl;
+			cout << "You did not randomly generate a number between 1 and 4" << endl;
 			break;
 		}
-		++i;
+		i++;
 	}
 	m.setRoomList(rooms);
 	m.setFinish(rooms[totalRooms -1]);
