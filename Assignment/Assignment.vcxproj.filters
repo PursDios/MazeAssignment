@@ -15,41 +15,35 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Maze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MazeController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\MazeController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\Room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Maze.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MazeController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="maze.txt">
+    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\roomnames.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="roomnames.txt">
+    <Text Include="..\..\..\..\..\..\..\%40University\Year 2\sem2\C++\Repos\Assignment\Assignment\maze.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

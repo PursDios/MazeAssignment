@@ -4,39 +4,40 @@
 #include "Maze.h"
 #include "string"
 #include "vector"
-#include "Player.h"
 #include "fstream"
-#include "random"
+#include <random>
 
 using namespace std;
 Maze m;
 MazeController::MazeController(void)
 {
+	//calls the main menu
 	MainMenu();
 }
+///the main menu for the program.
 void MazeController::MainMenu(void)
 {
 	int choice;
-	bool valid = false;
+	bool exit = false;
 	do
 	{
 		system("CLS");
 		cout << "Please select which maze you would like to do:" << endl;
-		cout << "1)Static Maze\n2)File Maze\n3)Random Maze" << endl;
+		cout << "1)Static Maze\n2)File Maze\n3)Random Maze\n99)exit" << endl;
 		cin >> choice;
 		switch (choice)
 		{
 		case 1:
 			StaticMaze();
-			valid = true;
 			break;
 		case 2:
 			FileMaze();
-			valid = true;
 			break;
 		case 3:
 			RandomMaze();
-			valid = true;
+			break;
+		case 99:
+			exit = true;
 			break;
 		default:
 			cout << "Invalid Selection please try again" << endl;
@@ -45,7 +46,7 @@ void MazeController::MainMenu(void)
 		}
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	} while (!valid);
+	} while (!exit);
 }
 ///a statically designed maze.
 void MazeController::StaticMaze(void)
@@ -98,6 +99,7 @@ void MazeController::StaticMaze(void)
 	m.setFinish(rooms[13]);
 	m.Play();
 }
+///reads in a maze from a file
 void MazeController::FileMaze(void)
 {
 	vector<Room*> rooms;
@@ -110,20 +112,24 @@ void MazeController::FileMaze(void)
 	rooms[1]->Link(2, *rooms[3]);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
 	ifstream fileLoc("maze.txt"); //filelocation (c# streamwriter)
-	string line, delimiter = "/", token;
+	string line, delimiter = "/", token; //the delimiter the program will search for.
 	size_t pos = 0;
 	string NESW[4];
 
 	int i = 0, x = 0;
 	try
 	{
+		//try and open the file.
 		if (fileLoc.is_open())
 		{
+			//while there are still lines to get.
 			while (getline(fileLoc, line))
 			{
+				//for each delimiter on that line.
 				while ((pos = line.find(delimiter)) != string::npos)
 				{
 					token = line.substr(0, pos);
+					//store information before the next delimiter in NESW[i]
 					NESW[i] = token;
 					//Cannot make links here otherwise all directions will be set to the same room
 					line.erase(0, pos + delimiter.length());
@@ -131,6 +137,7 @@ void MazeController::FileMaze(void)
 				}
 				i = 0;
 				//http://www.cplusplus.com/reference/string/stoi/     CONVERT FROM STRING TO INT
+				//if the NESW value is not a dash and is not an exclimation mark then create a link.
 				if (NESW[0] != "-" && NESW[0] != "!")
 					rooms[x]->Link(1, *rooms[stoi(NESW[0])]);
 				if (NESW[1] != "-" && NESW[0] != "!")
@@ -153,91 +160,153 @@ void MazeController::FileMaze(void)
 	m.setRoomList(rooms);
 	m.Play();
 }
+///randomly generates the maze.
 void MazeController::RandomMaze(void)
 {
 	vector<Room*> rooms;
 	random_device rd; // seed
 	mt19937 rng(rd()); // random-number engine
-	uniform_int_distribution<int> Limit(1, 25); //Used to generate the totalRooms.
-	uniform_int_distribution<int> otherRan(1, 4); //used for generating direction and the number of connections. 
+	uniform_int_distribution<int> Limit(1, 50); //Used to generate the totalRooms.
+	uniform_int_distribution<int> otherRan(1, 4);
 	int totalRooms = Limit(rng);
+	uniform_int_distribution<int> linkNum(1, totalRooms);
 	rooms.resize(totalRooms);
-	int i=0;
-
-	for (int i = 0;i < totalRooms;i++)
+	for (int i = 0; i < totalRooms; i++)
 	{
 		rooms[i] = new Room();
 	}
-	uniform_int_distribution<int> roomRan(1, totalRooms); //Used to randomly assign rooms
-	for(Room* r: rooms)
+	int i = 0;
+	for (Room* r : rooms)
 	{
-		int connections = otherRan(rng);
-		int direction = otherRan(rng);
-		int link = -1;
-		int j = 0;
-
-		//check the number of connections that a room needs to have
+		int j = 0, connections = otherRan(rng), link = -1;
 		switch (connections)
 		{
 		case 1:
-			link = -1;
-			while (link < i)
+			link = linkNum(rng);
+			while (link < i || link - 1 == i)
 			{
-				link = roomRan(rng);
-				direction = otherRan(rng); 
+				link = linkNum(rng);
 			}
-			r->Link(direction, *rooms[link -1]);
+			if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+			{
+				r->Link(1, *rooms[link - 1]);
+				rooms[link - 1]->Link(3, *r);
+			}
+			else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+			{
+				r->Link(2, *rooms[link - 1]);
+				rooms[link - 1]->Link(4, *r);
+			}
+			else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+			{
+				r->Link(3, *rooms[link - 1]);
+				rooms[link - 1]->Link(1, *r);
+			}
+			else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+			{
+				r->Link(4, *rooms[link - 1]);
+				rooms[link - 1]->Link(2, *r);
+			}
 			break;
 		case 2:
-			j = 0;
 			while (j != 2)
 			{
-				link = -1;
-				while (link < i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				++j;
+				if (r->getNorth() == nullptr && rooms[link -1]->getSouth() == nullptr)
+				{
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
+				}
+				else if (r->getEast() == nullptr && rooms[link -1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link-1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link-1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
 		case 3:
-			j = 0;
-			link = -1;
 			while (j != 3)
 			{
-				link = -1;
-				while (link < i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				++j;
+				if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
+				}
+				else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
 		case 4:
-			j = 0;
-			direction = otherRan(rng);
-			link = -1;
 			while (j != 4)
 			{
-				link = -1;
-				while (link < i)
+				link = linkNum(rng);
+				while (link < i || link - 1 == i)
 				{
-					link = roomRan(rng);
-					direction = otherRan(rng);
+					link = linkNum(rng);
 				}
-				r->Link(direction, *rooms[link -1]);
-				++j;
+				if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(1, *rooms[link - 1]);
+					rooms[link - 1]->Link(3, *r);
+				}
+				else if (r->getEast() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(2, *rooms[link - 1]);
+					rooms[link - 1]->Link(4, *r);
+				}
+				else if (r->getSouth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
+				{
+					r->Link(3, *rooms[link - 1]);
+					rooms[link - 1]->Link(1, *r);
+				}
+				else if (r->getWest() == nullptr && rooms[link - 1]->getWest() == nullptr)
+				{
+					r->Link(4, *rooms[link - 1]);
+					rooms[link - 1]->Link(2, *r);
+				}
+				j++;
 			}
 			break;
+
 		default:
-			cout << "Something has gone seriously wrong" << endl;
+			cout << "You did not randomly generate a number between 1 and 4" << endl;
 			break;
 		}
-		++i;
+		i++;
 	}
 	m.setRoomList(rooms);
 	m.setFinish(rooms[totalRooms -1]);

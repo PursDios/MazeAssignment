@@ -2,7 +2,6 @@
 #include "iostream"
 #include "stdlib.h"
 #include "MazeController.h"
-#include "Player.h"
 #include "Room.h"
 
 using namespace std;
@@ -11,6 +10,17 @@ void Maze::setRoomList(vector<Room*> p_roomlist)
 {
 	m_RoomList = p_roomlist;
 }
+///returns the players current location
+Room* Maze::getCurrentLocation()
+{
+	return m_CurrentLocation;
+}
+///sets the players current location
+void Maze::setCurrentLocation(Room* room)
+{
+	m_CurrentLocation = room;
+}
+///sets the end room of the maze
 void Maze::setFinish(Room* room)
 {
 	m_Finish = room;
@@ -19,29 +29,32 @@ void Maze::setFinish(Room* room)
 void Maze::Play()
 {
 	vector<Room*> rooms = m_RoomList;
-	Player p;
-	p.setCurrentLocation(rooms[0]);
+	setCurrentLocation(rooms[0]);
 	bool finished = false, win = false;
 	int choice;
 	system("cls");
 
-	system("pause");
+	//loops while the maze is unfinished (until you get to the end or the player chooses to quit
 	while (!finished)
 	{
-		if (p.getCurrentLocation() != m_Finish)
+		//if the players current location is not the winning room.
+		if (getCurrentLocation() != m_Finish)
 		{
-			p.getCurrentLocation()->printConnectedRooms();
-			cout << "99)Quit" << endl;
+			cout << "You are currently in the: " << getCurrentLocation()->getName() << endl;
+			//Prints the locations and directions of all the rooms that are connected to the current room.
+			getCurrentLocation()->printConnectedRooms();
+			cout << "88)Help\n99)Quit" << endl;
 			cin >> choice;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+			//will move the player based on where the user has selected.
 			switch (choice)
 			{
 			case 1:
-				if (p.getCurrentLocation()->getNorth() != NULL)
+				if (getCurrentLocation()->getNorth() != NULL)
 				{
-					p.setCurrentLocation(p.getCurrentLocation()->getNorth());
+					setCurrentLocation(getCurrentLocation()->getNorth());
 					cout << "You walk north" << endl;
 				}
 				else
@@ -49,9 +62,9 @@ void Maze::Play()
 
 				break;
 			case 2:
-				if (p.getCurrentLocation()->getEast() != NULL)
+				if (getCurrentLocation()->getEast() != NULL)
 				{
-					p.setCurrentLocation(p.getCurrentLocation()->getEast());
+					setCurrentLocation(getCurrentLocation()->getEast());
 					cout << "You walk east" << endl;
 				}
 				else
@@ -59,9 +72,9 @@ void Maze::Play()
 
 				break;
 			case 3:
-				if (p.getCurrentLocation()->getSouth() != NULL)
+				if (getCurrentLocation()->getSouth() != NULL)
 				{
-					p.setCurrentLocation(p.getCurrentLocation()->getSouth());
+					setCurrentLocation(getCurrentLocation()->getSouth());
 					cout << "You walk south" << endl;
 				}
 				else
@@ -69,9 +82,9 @@ void Maze::Play()
 
 				break;
 			case 4:
-				if (p.getCurrentLocation()->getWest() != NULL)
+				if (getCurrentLocation()->getWest() != NULL)
 				{
-					p.setCurrentLocation(p.getCurrentLocation()->getWest());
+					setCurrentLocation(getCurrentLocation()->getWest());
 					cout << "You walk West" << endl;
 				}
 				else
@@ -79,14 +92,17 @@ void Maze::Play()
 
 				break;
 			case 5:
-				if (typeid(*p.getCurrentLocation()) == typeid(SpecialRoom))
+				if (typeid(*getCurrentLocation()) == typeid(SpecialRoom))
 				{
 					cout << "You find a secret room" << endl;
-					SpecialRoom* sr = dynamic_cast<SpecialRoom*>(p.getCurrentLocation());
-					p.setCurrentLocation(sr->getSpecial());
+					SpecialRoom* sr = dynamic_cast<SpecialRoom*>(getCurrentLocation());
+					setCurrentLocation(sr->getSpecial());
 				}
 				else
 					cout << "Invalid Response" << endl;
+				break;
+			case 88:
+				cout << "You are in a maze, your job is to try and escape the maze. \nPress a number to select which direction you would like to travel in e.g. 1) is north, 3) is south etc.\nWhen you reach the end you will be notified and will be returned to the main menu." << endl;
 				break;
 			case 99:
 				finished = true;
@@ -110,5 +126,11 @@ void Maze::Play()
 		cout << "You escaped the maze" << endl;
 	else
 		cout << "You died in the maze" << endl;
-	system("pause");
+
+	cout << "Press any key to continue..." << endl;
+}
+///returns the list of rooms.
+vector<Room*> Maze::getRoomList()
+{
+	return m_RoomList;
 }
