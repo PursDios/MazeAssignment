@@ -167,26 +167,31 @@ void MazeController::RandomMaze(void)
 	random_device rd; // seed
 	mt19937 rng(rd()); // random-number engine
 	uniform_int_distribution<int> Limit(1, 50); //Used to generate the totalRooms.
-	uniform_int_distribution<int> otherRan(1, 4);
+	uniform_int_distribution<int> otherRan(1, 4); //used to generate the number of connections a room can have
 	int totalRooms = Limit(rng);
-	uniform_int_distribution<int> linkNum(1, totalRooms);
-	rooms.resize(totalRooms);
+	uniform_int_distribution<int> linkNum(1, totalRooms); //used to generate a room that can be connected to.
+	rooms.resize(totalRooms); //set the vector the same size as the randomly generated number of total rooms.
+	//populate the vector.
 	for (int i = 0; i < totalRooms; i++)
 	{
 		rooms[i] = new Room();
 	}
 	int i = 0;
+	//for each room make connections
 	for (Room* r : rooms)
 	{
 		int j = 0, connections = otherRan(rng), link = -1;
 		switch (connections)
 		{
+		//if the room generator assigns this room to only have one connection
 		case 1:
 			link = linkNum(rng);
+			//If a room is not trying to link to itself and the room it's connecting to is greater than itself in the vector.
 			while (link < i || link - 1 == i)
 			{
-				link = linkNum(rng);
+				link = linkNum(rng); //randomly generate a room to connect to
 			}
+			//if the room is not assigned to and the opposite room on the room it's trying to connect to is not taken 
 			if (r->getNorth() == nullptr && rooms[link - 1]->getSouth() == nullptr)
 			{
 				r->Link(1, *rooms[link - 1]);
@@ -208,7 +213,9 @@ void MazeController::RandomMaze(void)
 				rooms[link - 1]->Link(2, *r);
 			}
 			break;
+			//if the room generator assigns the room to have 2 connections.......
 		case 2:
+			//loop twice (because we need two connections)
 			while (j != 2)
 			{
 				link = linkNum(rng);
@@ -301,14 +308,17 @@ void MazeController::RandomMaze(void)
 				j++;
 			}
 			break;
-
+			//This default should NEVER be called.
 		default:
 			cout << "You did not randomly generate a number between 1 and 4" << endl;
 			break;
 		}
 		i++;
 	}
+	//sets the vector to the room vector we just created.
 	m.setRoomList(rooms);
+	//sets the end room
 	m.setFinish(rooms[totalRooms -1]);
+	//calls the play method to start the maze.
 	m.Play();
 }
