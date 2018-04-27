@@ -52,6 +52,7 @@ Room * Room::getWest()
 {
 	return m_West;
 }
+///randomly generates a rooms name
 void Room::generateName()
 {
 	ifstream fileLoc("roomnames.txt"); //filelocation (c# streamwriter)
@@ -78,24 +79,25 @@ void Room::generateName()
 	}
 	//https://www.uow.edu.au/~lukes/TEXTBOOK/notes-cpp/io/readtextfile.html
 }
+///printed the rooms connected to the room
 void Room::printConnectedRooms()
 {
-	if (m_North != NULL)
+	if (m_North != nullptr)
 		cout << "1)N: " << m_North->getName() << endl;
 	else
 		cout << "1)N: Nothing" << endl;
 
-	if (m_East != NULL)
+	if (m_East != nullptr)
 		cout << "2)E: " << m_East->getName() << endl;
 	else
 		cout << "2)E: Nothing" << endl;
 
-	if (m_South != NULL)
+	if (m_South != nullptr)
 		cout << "3)S: " << m_South->getName() << endl;
 	else
 		cout << "3)S: Nothing" << endl;
 
-	if (m_West != NULL)
+	if (m_West != nullptr)
 		cout << "4)W: " << m_West->getName() << endl;
 	else
 		cout << "4)W: Nothing" << endl;
@@ -111,7 +113,7 @@ void SpecialRoom::setSpecial(Room& p_room)
 void SpecialRoom::printConnectedRooms()
 {
 	Room::printConnectedRooms();
-	if (m_special != NULL)
+	if (m_special != nullptr)
 		cout << "5)X: There seems to be something off about that wall..." << endl;
 	else
 		cout << "5)X: Nothing seems out of place in this room" << endl;
