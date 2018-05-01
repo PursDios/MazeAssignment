@@ -102,25 +102,34 @@ void MazeController::StaticMaze(void)
 ///reads in a maze from a file
 void MazeController::FileMaze(void)
 {
-	vector<Room*> rooms;
-	rooms.resize(25);
-	for (int i = 0; i < 25; i++)
-	{
-		Room* r = new Room();
-		rooms[i] = r;
-	}
-	rooms[1]->Link(2, *rooms[3]);
 	//http://www.cplusplus.com/doc/tutorial/files/    READING INPUT
 	//filelocation (c# streamwriter)
-	ifstream fileLoc("maze.txt");		
+	ifstream fileLoc("maze.txt");
 	//the delimiter the program will search for.
 	string line, delimiter = "/", token;
 	size_t pos = 0;
 	string NESW[4];
 
+	vector<Room*> rooms;
+	//counts the number of lines in a file
+	fileLoc.open("maze.txt");
+	//counts the number of \n characters then adds one for the first line
+	int size = ((int)count(istreambuf_iterator<char>(fileLoc), istreambuf_iterator<char>(), '\n') + 1);
+	fileLoc.close();
+	rooms.resize(size);
+
+	//rooms.resize(25);
+	for (int i = 0; i < size; i++)
+	{
+		Room* r = new Room();
+		rooms[i] = r;
+	}
+
 	int i = 0, x = 0;
 	try
 	{
+
+		fileLoc.open("maze.txt");
 		//try and open the file.
 		if (fileLoc.is_open())
 		{
